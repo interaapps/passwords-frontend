@@ -1,0 +1,111 @@
+@import './manrope.scss';
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: manrope, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#page {
+    padding: 0px 20px;
+    margin-left: 80px;
+    margin-top: 80px;
+}
+
+.btn {
+    padding: 7px 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    background: #4542F4;
+    color: #FFF;
+    border-radius: 6px;
+    box-shadow: 0px 4px 4px 0px #00000028;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+    svg {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    span {
+      vertical-align: middle;
+    }
+}
+.btn:hover {
+  box-shadow: 0px 4px 10px 0px #00000028;
+}
+
+.btn:focus,.btn:active {
+  box-shadow: 0px 1px 4px 0px #00000048;
+}
+
+.btn.red {
+  background: #EE3232;
+}
+
+.btn.green {
+  background: #69cc69;
+}
+
+.btn.orange {
+  background: #f09f53;
+}
+
+.input {
+    border: none;
+    outline: none;
+    border-bottom: #EEEEEE solid 2.3px;
+    padding: 8px;
+    font-size: 19px;
+    display: block;;
+    transition: 0.3s;
+    background: none;
+
+    &:hover,
+    &:focus {
+        background: #EFEFEF77;
+        border-bottom: #4542F4 solid 2.3px;
+    }
+}
+
+.label {
+  font-size: 15px;
+  color: #545454;
+  margin-bottom: 6px;
+  margin-top: 14px;
+  display: block;
+}
+
+
+::-moz-selection,
+::selection { 
+    color: #FFF;
+    background: rgba(200, 0, 72, 0.5);
+}
+
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+width: 5px;
+height: 5px;
+}
+
+::-webkit-scrollbar-track {
+
+}
+
+::-webkit-scrollbar-thumb {
+background: #323232;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #767676;
+}

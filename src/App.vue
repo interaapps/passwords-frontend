@@ -1,32 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div style="height: 0px; width: 0px; overflow: hidden;"> <!-- Google Chromes autofill sucks -->
+      <input style="opacity: 0;position: absolute;">
+      <input type="password" style="opacity: 0;position: absolute;">
     </div>
-    <router-view/>
+    <Navigation />
+    <PasswordSidebar />
+    <CreateFolder />
+    <Login />
+    <router-view id="page" />
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navigation from "./components/Navigation";
+import PasswordSidebar from "./components/PasswordSidebar";
+import CreateFolder from "./components/CreateFolder";
+import Login from "./components/Login";
 
-#nav {
-  padding: 30px;
+export default {
+    components: {
+      Navigation,
+      Login,
+      CreateFolder,
+      PasswordSidebar
+    }
 }
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+<style lang="scss">
+#page {
 
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
