@@ -3,6 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+COPY deployment/nginx.conf nginx.conf
 RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
