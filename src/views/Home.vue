@@ -91,6 +91,7 @@ export default {
     font-size: 23px;
     max-width: 100%;
     overflow: hidden;
+      text-overflow: ellipsis;
   }
   .password-website {
     color: #969696;
@@ -103,6 +104,10 @@ export default {
       vertical-align: middle;
       margin-left: 10px;
       font-size: 18px;
+      max-width: calc(100% - 40px);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
       color: #3B3B3B;
     }
     img {
