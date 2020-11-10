@@ -35,4 +35,5 @@ cache:
       - kubectl delete secret docker-registry --ignore-not-found=true -n $KUBE_NAMESPACE
       - kubectl create secret docker-registry docker-registry --docker-server=$CI_REGISTRY --docker-username=$REGISTRY_USER --docker-password=$REGISTRY_PASSWORD -n $KUBE_NAMESPACE
       - (cat deployment/prod.yaml | envsubst) > deployment/deployment.env.yaml
-      - kubectl apply -n $KUBE_NAMESPACE -f deployment/deployment.env.yaml  
+      - kubectl apply -n $KUBE_NAMESPACE -f deployment/deployment.env.yaml
+  
