@@ -20,9 +20,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-          envFrom:
-            - configMapRef:
-                name: passwords-frontend-env
       imagePullSecrets:
         - name: 'docker-registry'
   revisionHistoryLimit: 1
