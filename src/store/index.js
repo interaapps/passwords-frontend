@@ -16,13 +16,17 @@ export default new Vuex.Store({
       folders: {
         1: {
           id: 1,
-          name: "New Folder",
-          color: "#EA5555",
+          folder: {
+            name: "New Folder",
+            color: "#EA5555",
+          },
           folders: {
             3: {
               id: 3,
-              name: "Test",
-              color: "#586622"
+              folder: {
+                name: "Test",
+                color: "#586622"
+              }
             },
           },
           passwords: {
@@ -39,8 +43,10 @@ export default new Vuex.Store({
         },
         2: {
           id: 2,
-          name: "Test",
-          color: "#58EA55",
+          folder: {
+            name: "Test",
+            color: "#58EA55",
+          },
           parent: 0
         }
       },
