@@ -2,12 +2,11 @@ cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - modules/
-  
-  stages:
+
+stages:
     - package
     - deploy
-  
-  build_image:
+build_image:
     stage: package
     image: docker:latest
     services:
@@ -21,8 +20,8 @@ cache:
       - docker build -t ${CI_REGISTRY}/${CI_PROJECT_PATH}:${BRANCH_SLUG_SHORT}-${CI_COMMIT_SHORT_SHA} .
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
       - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:${BRANCH_SLUG_SHORT}-${CI_COMMIT_SHORT_SHA}
-  
-  deploy_prod:
+
+deploy_prod:
     image: google/cloud-sdk
     stage: deploy
     environment: passwords-frontend-prod
