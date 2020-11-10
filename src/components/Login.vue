@@ -10,8 +10,8 @@
                     <a @click="register" id="login-button" class="btn">CREATE</a>
                 </div>
                 <div v-else>
-                    <img id="profile-picture" :src="$store.state.user.profilepic">
-                    <h1 id="user-name">{{$store.state.user.username}}</h1>
+                    <img id="profile-picture" :src="$store.state.user.profilepic || 'https://accounts.interaapps.de/nopb.png'">
+                    <h1 id="user-name">{{$store.state.user.username || 'Not logged in'}}</h1>
                     <input id="password-input" v-model="password" type="password" class="input" style="width: 100%" placeholder="Password">
                     <a @click="login" id="login-button" class="btn">LOGIN</a>
                     <span v-if="incorrectPassword">Incorrect Password</span>

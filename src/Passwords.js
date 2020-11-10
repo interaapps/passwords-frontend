@@ -2,6 +2,8 @@ import { PrajaxClient } from "cajaxjs";
 import store from "./store";
 import helpers from "./helpers";
 import CryptoJS from 'crypto-js'
+import Router from './router'; 
+
 
 export default class Passwords {
     constructor(baseUrl, session){
@@ -20,6 +22,13 @@ export default class Passwords {
 
     fetchAndInsert(){
         return this.fetch().then(res=>{
+            console.log(Router.currentRoute);
+            if (res.error && (
+                Router.currentRoute.name == "Home" ||
+                Router.currentRoute.name == "SecurityCheck"
+            )) {
+                window.location = process.env.VUE_APP_API_BASE+"/auth/ia/login"
+            }
             store.state.user      = res.user;
             store.state.passwords = res.passwords;
             store.state.keys      = res.keys;

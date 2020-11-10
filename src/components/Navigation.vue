@@ -81,9 +81,8 @@ export default {
     }),
      mounted(){
         window.addEventListener("keydown", (event) => {
-            console.log(event.key)
+            //console.log(event.key)
             if (event.ctrlKey && event.key == 'f') {
-                console.log("Search") 
                 this.searchOpened = true
                 event.preventDefault()
                 const element = document.querySelector("#search input")
