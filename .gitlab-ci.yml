@@ -20,7 +20,7 @@ script:
 deploy_prod:
     image: google/cloud-sdk
     stage: deploy
-environment: passwordsfrontend-prod
+environment: passwords-frontend-prod
 only:
     - master
 before_script:
