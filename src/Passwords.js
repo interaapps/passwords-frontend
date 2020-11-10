@@ -23,10 +23,8 @@ export default class Passwords {
     fetchAndInsert(){
         return this.fetch().then(res=>{
             console.log(Router.currentRoute);
-            if (res.error && (
-                Router.currentRoute.name == "Home" ||
-                Router.currentRoute.name == "SecurityCheck"
-            )) {
+            store.state.fetched = true
+            if (res.error && Router.currentRoute.name != "Authentication") {
                 window.location = process.env.VUE_APP_API_BASE+"/auth/ia/login"
             }
             store.state.user      = res.user;

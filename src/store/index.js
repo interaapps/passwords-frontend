@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    fetched: false,
     user: {
       picture: 'https://cdn.interaapps.de/service/accounts/profilepics/53_12432e8f906dbc82fd8368a7ccf5aa2e0ceca6fc2ab0bb53c7f3efeb865ff44941c08bd7365b4d7f7f63a7a9642d1ba07f439fe08ecfecebb6caebd0e5071902676418d7464c3967c770375326d90a1b.png.png',
     },

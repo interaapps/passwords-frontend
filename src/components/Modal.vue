@@ -96,7 +96,6 @@ export default {
             bottom: 0px;
             width: 100%;
             min-height: 80%;
-            height: 100vh;
             overflow: auto;
             border-radius: 20px 20px 0px 0px;
         }

@@ -1,7 +1,13 @@
 <template>
     <div>
         <Modal :opened="!$store.state.encryptionKey" >
-            <div v-if="$store.state.user !== null">
+            <div v-if="!$store.state.fetched">
+                <br>
+                <h1>Loading...</h1><br>
+                <h3>Please wait a few seconds.</h3>
+                <br>
+            </div>
+            <div v-else-if="$store.state.user !== null">
                 <div v-if="$store.state.masterPassword === null">
                     <img id="profile-picture" :src="$store.state.user.profilepic || 'https://accounts.interaapps.de/nopb.png'">
                     <h1 id="user-name">Welcome {{$store.state.user.username || 'Not logged in'}},</h1>
