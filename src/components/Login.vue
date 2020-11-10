@@ -3,8 +3,8 @@
         <Modal :opened="!$store.state.encryptionKey" >
             <div v-if="$store.state.user !== null">
                 <div v-if="$store.state.masterPassword === null">
-                    <img id="profile-picture" :src="$store.state.user.profilepic">
-                    <h1 id="user-name">Welcome {{$store.state.user.username}},</h1>
+                    <img id="profile-picture" :src="$store.state.user.profilepic || 'https://accounts.interaapps.de/nopb.png'">
+                    <h1 id="user-name">Welcome {{$store.state.user.username || 'Not logged in'}},</h1>
                     <h3 style="text-align: center; color: #434343; margin-top: 10px">Welcome to InteraApps-Passwords! You have to enter a secure password. This will be used to encrypt every password.</h3>
                     <input id="password-input" v-model="password" type="password" class="input" style="width: 100%" placeholder="Password">
                     <a @click="register" id="login-button" class="btn">CREATE</a>
