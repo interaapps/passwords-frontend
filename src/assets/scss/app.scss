@@ -11,6 +11,32 @@ html {
     scroll-behavior: smooth;
 }
 
+h1 {
+  font-size: 35px;
+  color: #323232;
+}
+h2 {
+  font-size: 31px;
+  color: #323232;
+}
+h3 {
+  font-size: 25px;
+  color: #323232;
+}
+
+p {
+  font-size: 19px;
+}
+
+ul {
+  margin-left: 23px;
+}
+
+a:link, a:visited {
+  color: #4542F4;
+  text-decoration: none;
+}
+
 #page {
     padding: 0px 20px;
     margin-left: 80px;

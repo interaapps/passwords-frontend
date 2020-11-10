@@ -22,6 +22,7 @@
 import Modal from "./Modal";
 
 import CryptoJS from 'crypto-js'
+import helpers from '../helpers';
 
 export default {
     data: ()=>({
@@ -33,16 +34,18 @@ export default {
     },
     methods:{
         login(){
-            if (CryptoJS.AES.decrypt(this.$store.state.masterPassword.key, this.password).toString(CryptoJS.enc.Utf8) == "OK") {
-                this.passwordsClient.decryptPasswords(this.$store.state.passwords, this.password)
-                this.$store.state.encryptionKey = this.password
+            let masterKey = CryptoJS.AES.decrypt(this.$store.state.masterPassword.key, this.password).toString(CryptoJS.enc.Utf8);
+            if (masterKey.startsWith(":MASTER:")) {
+                this.passwordsClient.decryptPasswords(this.$store.state.passwords, masterKey)
+                this.$store.state.encryptionKey = masterKey
+                console.log(this.passwordsClient.getKey("FOLDER:9"));
             } else {
                 this.incorrectPassword = true
             }
         },
         register(){
                 this.passwordsClient
-                .setMasterPassword(CryptoJS.AES.encrypt("OK", this.password).toString())
+                .setMasterPassword(CryptoJS.AES.encrypt(/*MASTERKEY*/":MASTER:"+helpers.randomString(100), this.password).toString())
                 .then(()=>{
                     this.passwordsClient.fetchAndInsert();
                 });

@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: passwords-frontend-prod
+  labels:
+    app: passwords-frontend-prod
+spec:
+  selector:
+    matchLabels:
+      app: passwords-frontend-prod
+  template:
+    metadata:
+      labels:
+        app: passwords-frontend-prod
+    spec:
+
+      containers:
+        - name: passwords-frontend-prod
+          image: '${CI_REGISTRY}/${CI_PROJECT_PATH}:${BRANCH_SLUG_SHORT}-${CI_COMMIT_SHORT_SHA}'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: passwords-frontend-env
+      imagePullSecrets:
+        - name: 'docker-registry'
+  revisionHistoryLimit: 1
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: passwords-frontend-prod
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: passwords-frontend-prod
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: passwords-frontend-prod
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - passwords.interaapps.de
+        - www.passwords.interaapps.de
+      secretName: passwords-frontend-prod-ssl
+  rules:
+    - host: passwords.interaapps.de
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: passwords-frontend-prod
+                port:
+                  number: 80
+    - host: www.passwords.interaapps.de
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: passwords-frontend-prod
+                port:
+                  number: 80

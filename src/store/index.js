@@ -55,7 +55,8 @@ export default new Vuex.Store({
         }
       },
       parent: null
-    }
+    },
+    folderModal: null
   },
   mutations: {
   },

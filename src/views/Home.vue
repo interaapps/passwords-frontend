@@ -7,15 +7,15 @@
         <span>Home</span>
       </div>
 
-      <div class="folder" v-for="(folder, id) in passwords.folders" :key="id" :style="{background: folder.color}" @click="passwords = folder">
+      <div class="folder" v-for="(folder, id) in passwords.folders" :key="id" :style="{background: folder.folder.color}" @click="passwords = folder">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/>
           <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/>
         </svg>
-        <span>{{folder.name}}</span>
+        <span>{{folder.folder.name}}</span>
       </div>
 
-      <div class="folder add">
+      <div class="folder add" @click="$store.state.folderModal = {opened: true}">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
         </svg>
@@ -64,8 +64,7 @@ export default {
               username: this.$store.state.user.username,
               password: helpers.randomString(15),
               website: "https://",
-              description: `
-  `
+              description: ``
           }
       }
   },
