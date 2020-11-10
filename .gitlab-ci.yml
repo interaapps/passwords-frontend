@@ -18,8 +18,8 @@ script:
     - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:${BRANCH_SLUG_SHORT}-${CI_COMMIT_SHORT_SHA}
 
 deploy_prod:
-image: google/cloud-sdk
-stage: deploy
+    image: google/cloud-sdk
+    stage: deploy
 environment: passwords-frontend-prod
 only:
     - master
