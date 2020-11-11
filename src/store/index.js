@@ -12,6 +12,7 @@ export default new Vuex.Store({
     encryptionKey: null,
     currentPassword: null,
     masterPassword: null, // The encrypted encryption-key. Null if not exists
+    currentFolder: null,
     passwords: {
       root: true,
       folders: {

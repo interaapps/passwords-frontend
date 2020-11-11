@@ -44,8 +44,8 @@ export default {
         login(){
             let masterKey = CryptoJS.AES.decrypt(this.$store.state.masterPassword.key, this.password).toString(CryptoJS.enc.Utf8);
             if (masterKey.startsWith(":MASTER:")) {
-                this.passwordsClient.decryptPasswords(this.$store.state.passwords, masterKey)
                 this.$store.state.encryptionKey = masterKey
+                this.passwordsClient.decryptPasswords(this.$store.state.passwords, masterKey)
                 console.log(this.passwordsClient.getKey("FOLDER:9"));
             } else {
                 this.incorrectPassword = true

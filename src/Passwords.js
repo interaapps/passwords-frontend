@@ -48,16 +48,16 @@ export default class Passwords {
         return this.apiClient.put("/password", data).then(res=>res.json())
     }
 
-    deletePassword(){
-        return this.apiClient.delete("/password").then(res=>res.json())
+    deletePassword(password){
+        return this.apiClient.delete("/password/"+password).then(res=>res.json())
     }
 
     putFolder(data){
         return this.apiClient.put("/folder", data).then(res=>res.json())
     }
 
-    deleteFolder(){
-        return this.apiClient.delete("/folder").then(res=>res.json())
+    deleteFolder(folder){
+        return this.apiClient.delete("/folder/"+folder).then(res=>res.json())
     }
 
     checkOnline(){
@@ -65,7 +65,13 @@ export default class Passwords {
     }
 
     getKey(name){
+        console.log(store.state.encryptionKey);
         return CryptoJS.AES.decrypt(this.keys[name].key, store.state.encryptionKey).toString(CryptoJS.enc.Utf8);
+    }
+
+    hasKey(name){
+        console.log(this.keys[name]);
+        return typeof this.keys[name] !== 'undefined';
     }
 
     putKey(name, type, key){
@@ -76,11 +82,33 @@ export default class Passwords {
         return this.apiClient.put("/key", {name: "APP.MASTER", type: 'MASTER_PASSWORD', key: masterPassword}).then(res=>res.json())
     }
 
+    getCurrentFolder(){
+        return store.state.currentFolder || store.state.passwords
+    }
+
     decryptPasswords(passwords = null, key = null){
         if (passwords === null)
             passwords = store.state.passwords
-        if (key === null)
-            key       = store.state.encryptionKey
+        let keyGiven = true
+        if (key === null) {
+            keyGiven = false
+            key      = store.state.encryptionKey
+        }
+
+        console.log(passwords);
+
+        for (let folder in passwords.folders) {
+            let element = passwords.folders[folder]
+            if (element.folder) {
+                if (this.hasKey("FOLDER:"+element.folder.id)) {
+                    element.encryptionKey = this.getKey("FOLDER:"+element.folder.id)
+                } else if (keyGiven && key) {
+                    element.encryptionKey = key
+                } else
+                    console.log("Couldn't get Encryption-Key");
+            }
+            this.decryptPasswords(element, element.encryptionKey)
+        }
 
         for (let password in passwords.passwords) {
             let element = passwords.passwords[password]
@@ -92,7 +120,7 @@ export default class Passwords {
                 element.password    = CryptoJS.AES.decrypt(element.password,    key).toString(CryptoJS.enc.Utf8);
                 element.description = CryptoJS.AES.decrypt(element.description, key).toString(CryptoJS.enc.Utf8);
                 
-                element.encryptionKey = key;
+                element.key = key;
                 console.log(element)
             } catch(e){
                 console.log("Error while decrypting")

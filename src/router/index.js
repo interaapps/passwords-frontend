@@ -21,6 +21,11 @@ const routes = [
     component: () => import('../views/SecurityCheck.vue')
   },
   {
+    path: '/notes',
+    name: 'Notes',
+    component: () => import('../views/Notes.vue')
+  },
+  {
     path: '/auth',
     name: 'Authentication',
     component: () => import('../views/auth/IAAuthLogin.vue')
