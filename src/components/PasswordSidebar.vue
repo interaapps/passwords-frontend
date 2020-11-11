@@ -106,7 +106,7 @@ export default {
                 this.folder = this.passwordsClient.getCurrentFolder().folder.id
             else
                 this.folder = null
-            this.key         = this.$store.state.currentPassword.key || this.passwordsClient.getCurrentFolder().encryptionKey
+            this.key         = this.$store.state.currentPassword.key || this.passwordsClient.getCurrentFolder().encryptionKey || this.$store.state.encryptionKey
             console.log("Da key: "+this.key);
         }
     },
@@ -132,21 +132,14 @@ export default {
                 .then(res=>{
                     if (res.success)
                         this.$store.state.currentPassword = null;
-                    this.passwordsClient
-                        .fetchAndInsert()
-                        .then(()=>{
-                            this.passwordsClient.decryptPasswords()
-                        })
+                    this.passwordsClient.fetchAndDecrypt()
                 })
         },
         deletePassword(){
             this.passwordsClient.deletePassword(this.$store.state.currentPassword.id)
                 .then(()=>{
-                    this.passwordsClient
-                        .fetchAndInsert()
-                        .then(()=>{
-                            this.passwordsClient.decryptPasswords()
-                        })
+                    this.passwordsClient.fetchAndDecrypt()
+                    this.$store.state.currentPassword = null;
                 })
         },
         generatePassword(){

@@ -40,6 +40,13 @@ export default class Passwords {
         })
     }
 
+    fetchAndDecrypt(){
+        return this.fetchAndInsert()
+            .then(()=>{
+                this.decryptPasswords()
+            })
+    }
+
     fakeResponse(entryName){
         return new Promise((then)=>{then(localStorage[entryName])})
     }

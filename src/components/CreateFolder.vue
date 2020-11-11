@@ -37,15 +37,22 @@ export default {
     },
     methods: {
         save(){
-            this.passwordsClient.putFolder({
+            let data = {
                 name: this.name,
                 color: this.selectedColor
-            }).then(res=>{
+            }
+
+            if (this.passwordsClient.getCurrentFolder()) {
+                data.parent = this.passwordsClient.getCurrentFolder().folder.id
+                console.log("PARENTED: "+data.parent);
+            }
+            this.passwordsClient.putFolder(data).then(res=>{
                 if (res.success && !res.extra.updated) {
                     this.passwordsClient
                         .putKey("FOLDER:"+res.extra.id, 'FOLDER', helpers.randomString(50))
                         .then(()=>{
-                            console.log("CREATED");
+                            this.passwordsClient
+                                .fetchAndDecrypt()
                         })
                 }
             })

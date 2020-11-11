@@ -93,10 +93,7 @@ export default {
           this.passwordsClient.deleteFolder(folder.folder.id)
               .then(()=>{
                   this.passwordsClient
-                        .fetchAndInsert()
-                        .then(()=>{
-                            this.passwordsClient.decryptPasswords()
-                        })
+                        .fetchAndDecrypt()
               })
       },
       changeFolder(folder){
