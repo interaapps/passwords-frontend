@@ -7,8 +7,6 @@
 <script>
 export default {
     mounted(){
-        console.log("yra")
-        console.log(this.passwordsClient)
         localStorage["session"] = this.$route.query.authentication
         this.passwordsClient.apiClient.options.header["X-Key"] = localStorage["session"]
         this.passwordsClient.fetchAndInsert().then(()=>this.$router.push("/"))

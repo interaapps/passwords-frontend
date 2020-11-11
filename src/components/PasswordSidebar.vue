@@ -107,12 +107,10 @@ export default {
             else
                 this.folder = null
             this.key         = this.$store.state.currentPassword.key || this.passwordsClient.getCurrentFolder().encryptionKey || this.$store.state.encryptionKey
-            console.log("Da key: "+this.key);
         }
     },
     methods: {
         save(){
-            console.log("ENCRYPT: "+this.$store.state.encryptionKey);
             let data = {
                 name: CryptoJS.AES.encrypt(this.name,               this.key).toString(),
                 username: CryptoJS.AES.encrypt(this.username,       this.key).toString(),
@@ -120,7 +118,6 @@ export default {
                 website: CryptoJS.AES.encrypt(this.website,         this.key).toString(),
                 description: CryptoJS.AES.encrypt(this.description, this.key).toString()
             }
-            console.log(this.username);
             if (this.$store.state.currentPassword.id)
                 data.id = this.$store.state.currentPassword.id
             
@@ -151,7 +148,6 @@ export default {
             if (this.generatePasswordSpecialChars)
                 letters += "&!$/()=[]{}?+*#'~'";
             this.generatedPassword = helpers.randomString(this.generatePasswordLength, letters)
-            console.log(this.generatedPassword);
         },
         changed(){
             return !(this.name        == this.$store.state.currentPassword.name

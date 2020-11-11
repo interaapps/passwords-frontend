@@ -15,7 +15,6 @@ function getWebsiteHost(url){
         if (url.includes("/"))
         url = url.split("/")[0]
     }
-    console.log(url)
     return url
 }
 

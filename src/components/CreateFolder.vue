@@ -44,7 +44,6 @@ export default {
 
             if (this.passwordsClient.getCurrentFolder()) {
                 data.parent = this.passwordsClient.getCurrentFolder().folder.id
-                console.log("PARENTED: "+data.parent);
             }
             this.passwordsClient.putFolder(data).then(res=>{
                 if (res.success && !res.extra.updated) {

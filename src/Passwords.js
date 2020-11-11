@@ -22,7 +22,6 @@ export default class Passwords {
 
     fetchAndInsert(){
         return this.fetch().then(res=>{
-            console.log(Router.currentRoute);
             store.state.fetched = true
             if (res.error && Router.currentRoute.name != "Authentication") {
                 window.location = process.env.VUE_APP_API_BASE+"/auth/ia/login"
@@ -72,12 +71,10 @@ export default class Passwords {
     }
 
     getKey(name){
-        console.log(store.state.encryptionKey);
         return CryptoJS.AES.decrypt(this.keys[name].key, store.state.encryptionKey).toString(CryptoJS.enc.Utf8);
     }
 
     hasKey(name){
-        console.log(this.keys[name]);
         return typeof this.keys[name] !== 'undefined';
     }
 
@@ -101,8 +98,6 @@ export default class Passwords {
             keyGiven = false
             key      = store.state.encryptionKey
         }
-
-        console.log(passwords);
 
         for (let folder in passwords.folders) {
             let element = passwords.folders[folder]
@@ -128,7 +123,6 @@ export default class Passwords {
                 element.description = CryptoJS.AES.decrypt(element.description, key).toString(CryptoJS.enc.Utf8);
                 
                 element.key = key;
-                console.log(element)
             } catch(e){
                 console.log("Error while decrypting")
             }

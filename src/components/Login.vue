@@ -46,7 +46,6 @@ export default {
             if (masterKey.startsWith(":MASTER:")) {
                 this.$store.state.encryptionKey = masterKey
                 this.passwordsClient.decryptPasswords(this.$store.state.passwords, masterKey)
-                console.log(this.passwordsClient.getKey("FOLDER:9"));
             } else {
                 this.incorrectPassword = true
             }

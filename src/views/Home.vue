@@ -40,8 +40,7 @@
     <h1 class="section-title">Passwords</h1>
 
     <div>
-
-      <div class="password" v-for="(password, id) in passwords.passwords" :key="id" @click="$store.state.currentPassword = password" :style="{display: password.name === '%$test$%' ? 'none':'' }">
+      <div class="password" v-for="(password, id) in passwords.passwords" :key="id" @click="$store.state.currentPassword = password">
           <div class="password-head">
             <img :src="'https://icons.duckduckgo.com/ip3/'+password.websiteHost+'.ico'">
             <h1>{{password.name}}</h1>
