@@ -2,7 +2,7 @@
     <div>
         <div id="notes-list">
             <div id="actions">
-                <svg id="add" viewBox="0 0 16 16" class="bi bi-journal-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/><path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/><path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/></svg>
+                <svg @click="newNote()" id="add" viewBox="0 0 16 16" class="bi bi-journal-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/><path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/><path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/></svg>
             </div>
             <div id="list">
                 <div class="entry" v-for="note in $store.state.notes" :key="note.id" @click="selectNote(note)" :class="{selected: selected == note.id}">
@@ -12,6 +12,12 @@
             </div>
         </div>
         <div id="current-note">
+            <div id="right">
+                <div id="badges">
+
+                    <span v-if="!selected" class="badge">NEW</span>
+                </div>
+            </div>
             <input type="text" id="title-input" v-model="title" placeholder="Title">
             <textarea id="content-input" v-model="contents" placeholder="Just write in here :)"></textarea>
         </div>
@@ -29,6 +35,21 @@ export default {
             this.selected = note.id
             this.title    = note.title
             this.contents = note.content
+        },
+        newNote(){
+            this.selected = null
+            this.title    = ""
+            this.contents = ""
+        },
+        save(){
+            this.passwordsClient
+                .putNote({
+
+                }).then(res=>{
+                    if (res.success) {
+                        this.selected = res.extra.id
+                    }
+                })
         }
     }
 }
@@ -106,6 +127,7 @@ export default {
         margin-bottom: 40px;
         font-size: 40px;
         font-weight: 600;
+        color: #3A3A3A;
     }
 
     #content-input {
@@ -113,6 +135,24 @@ export default {
         font-size: 24px;
         min-height: calc(100vh - 200px);
         resize: vertical;
+        color: #434343;
+    }
+
+    #right {
+        float: right;
+        position: absolute;
+        right: 50px;
+        #badges {
+            .badge {
+                background: #7aec38;
+                color: #FFF;
+                padding: 2px 15px;
+                border-radius: 4.5px; 
+                margin-right: 10px;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+        }
     }
 }
 </style>
