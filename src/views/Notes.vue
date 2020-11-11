@@ -19,7 +19,7 @@
                     <span v-if="!selected" class="badge">NEW</span>
                 </div>
             </div>
-            <input    @keypress="unsaved = true" type="text" id="title-input" v-model="title" placeholder="Title">
+            <input    @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" type="text" id="title-input" v-model="title" placeholder="Title">
             <textarea @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" id="content-input" v-model="contents" placeholder="Just write in here :)"></textarea>
         </div>
     </div>

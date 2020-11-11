@@ -42,7 +42,7 @@ export default {
                 color: this.selectedColor
             }
 
-            if (this.passwordsClient.getCurrentFolder()) {
+            if (this.passwordsClient.getCurrentFolder().folder) {
                 data.parent = this.passwordsClient.getCurrentFolder().folder.id
             }
             this.passwordsClient.putFolder(data).then(res=>{
