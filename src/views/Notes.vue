@@ -17,49 +17,75 @@
 
                     <span v-if="unsaved" style="background: #EE4343" class="badge">UNSAVED</span>
                     <span v-if="!selected" class="badge">NEW</span>
+                    <svg v-else width="25px" @click="deleteNote" height="25px" style="color: #F13737; cursor: pointer" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
                 </div>
             </div>
             <input    @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" type="text" id="title-input" v-model="title" placeholder="Title">
+            <h4 id="date">Updated: {{updated}}</h4>
             <textarea @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" id="content-input" v-model="contents" placeholder="Just write in here :)"></textarea>
         </div>
     </div>
 </template>
 <script>
+import CryptoJS from 'crypto-js'
+
 export default {
     data: ()=>({
         selected: null,
-        title: "",
+        title:    "",
         contents: "",
-        unsaved: false
+        updated:  "now",
+        unsaved:  false
     }),
     methods:{
         selectNote(note){
             this.selected = note.id
             this.title    = note.title
             this.contents = note.content
+            this.updated  = note.updated_at
             this.unsaved  = false
         },
         newNote(){
             this.selected = null
             this.title    = ""
             this.contents = ""
+            this.updated  = "now"
             this.unsaved  = true
         },
-        save(){
+        deleteNote(){
             this.passwordsClient
-                .putNote({
-
-                }).then(res=>{
+                .deleteNote(this.selected)
+                .then(res=>{
                     if (res.success) {
-                        if (!res.extra.updated)
+                        this.newNote()
+                        this.passwordsClient.fetchAndDecrypt()
+                    }
+                })
+        },
+        save(){
+            let data = {
+                title:   CryptoJS.AES.encrypt(this.title,    this.$store.state.encryptionKey).toString(),
+                content: CryptoJS.AES.encrypt(this.contents, this.$store.state.encryptionKey).toString()
+            }
+            if (this.selected)
+                data.id = this.selected
+
+            console.log(this.selected);
+
+            this.passwordsClient
+                .putNote(data).then(res=>{
+                    if (res.success) {
+                        if (!res.extra.updated) {
                             this.selected = res.extra.id
-                        this.unsaved  = true
+                        }
+                        this.unsaved  = false
+                        this.passwordsClient.fetchAndDecrypt()
                     }
                 })
         },
         keyboardEvents(e){
             if (e.code == 'KeyS'){
-                console.log("SAVING");
+                this.save()
                 e.preventDefault()
             }
         }
@@ -134,9 +160,14 @@ export default {
         display: block;
     }
 
+    #date {
+        margin-top: 18px;
+        margin-bottom: 34px;
+        color: #787878;
+    }
+
     #title-input {
         width: 100%;
-        margin-bottom: 40px;
         font-size: 40px;
         font-weight: 600;
         color: #3A3A3A;
@@ -162,7 +193,15 @@ export default {
                 border-radius: 4.5px; 
                 margin-right: 10px;
                 display: inline-block;
-                margin-bottom: 20px;
+                vertical-align: middle;
+                margin-top: 15px;
+            }
+
+            svg {
+                vertical-align: middle;
+                margin-top: 15px;
+                width:  27px;
+                height: 27px;
             }
         }
     }

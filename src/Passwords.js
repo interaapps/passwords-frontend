@@ -28,7 +28,9 @@ export default class Passwords {
             }
             store.state.user      = res.user;
             store.state.passwords = res.passwords;
+            store.state.notes     = res.notes;
             store.state.keys      = res.keys;
+            
             const keys = res.keys.reverse()
             for (let index in keys) {
                 const element = keys[index];
@@ -42,6 +44,7 @@ export default class Passwords {
     fetchAndDecrypt(){
         return this.fetchAndInsert()
             .then(()=>{
+                this.decryptNotes()
                 this.decryptPasswords()
             })
     }
@@ -66,6 +69,14 @@ export default class Passwords {
         return this.apiClient.delete("/folder/"+folder).then(res=>res.json())
     }
 
+    putNote(data){
+        return this.apiClient.put("/note", data).then(res=>res.json())
+    }
+
+    deleteNote(password){
+        return this.apiClient.delete("/note/"+password).then(res=>res.json())
+    }
+
     checkOnline(){
         return navigator.onLine || false
     }
@@ -88,6 +99,24 @@ export default class Passwords {
 
     getCurrentFolder(){
         return store.state.currentFolder || store.state.passwords
+    }
+
+    decryptNotes(notes = null, key = null){
+        if (notes === null)
+            notes = store.state.notes
+        if (key === null) {
+            key = store.state.encryptionKey
+        }
+
+        console.log("YEEEEEEEEEEEEEEEEEE");
+        console.log(notes);
+        
+        for (let note in notes) {
+            const element = notes[note]
+            console.log(element);
+            element.title   = CryptoJS.AES.decrypt(element.title,   key).toString(CryptoJS.enc.Utf8);
+            element.content = CryptoJS.AES.decrypt(element.content, key).toString(CryptoJS.enc.Utf8);
+        }
     }
 
     decryptPasswords(passwords = null, key = null){
