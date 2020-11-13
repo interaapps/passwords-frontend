@@ -100,6 +100,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #notes-list {
+    overflow-y: auto;
     height: 100%;
     width: 280px;
     background: #F9F9F9;
