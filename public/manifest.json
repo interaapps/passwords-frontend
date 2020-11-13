@@ -1,7 +1,7 @@
 {
     "name":"InteraApps-Passwords",
     "short_name":"passwords",
-    "theme_color":"#4DBA87",
+    "theme_color":"#f4f4f4",
     "icons":[
         {
             "src":"./img/icons/192x192.png",
