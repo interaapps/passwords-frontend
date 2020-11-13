@@ -198,6 +198,10 @@ export default {
     margin-top:  110px;
     display: block;
     height: 100%;
+
+    padding-left:  20px;
+    padding-right: 20px;
+    
     input,
     textarea {
         border: none;
@@ -260,13 +264,38 @@ export default {
     }
 
     &.sidebar-closed {
-        margin-left: 65px;
+        margin-left: 60px;
     }
 
     &.fullscreen {
         margin-top: 30px;
     }
 
+    &.sidebar-closed {
+        padding-left:  0px;
+        padding-right: 0px;
+    }
+
+}
+
+@media screen and (max-width: 720px){
+    #current-note {
+        margin-left: 300px;
+        padding-left:  10px;
+        padding-right: 10px;
+
+        #date {
+            font-size: 14.5px;
+        }
+
+        #title-input {
+            font-size: 33px;
+        }
+
+        #content-input {
+            font-size: 19.5px;
+        }
+    }
 }
 
 </style>
