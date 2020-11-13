@@ -15,14 +15,8 @@ export default new Vuex.Store({
     notes: [
         {
           id: 1,
-          title: "Hello world",
-          content: "Yes it works",
-          updated_at: "11.9.2001"
-        },
-        {
-          id: 2,
-          title: "Second",
-          content: "Yes it works a second time asfdasdf asdf ",
+          title: "Loading",
+          content: "Loading",
           updated_at: "11.9.2001"
         }
     ],
