@@ -128,7 +128,7 @@ export default {
         #open {
             float: right;
             margin-top: 3px;
-            transform: rotate(0deg);
+            transform: rotate(180deg);
             transition: 0.3s;
         }
 
@@ -175,7 +175,7 @@ export default {
 
         #actions {
             #open {
-                transform: rotate(180deg);
+                transform: rotate(0deg);
             }
 
             #fullscreen {
