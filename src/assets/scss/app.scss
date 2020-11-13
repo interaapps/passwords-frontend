@@ -42,6 +42,11 @@ a:link, a:visited {
     margin-left: 80px;
     margin-top: 80px;
     min-height: 100%;
+
+    &.fullscreen {
+        margin: 0px;
+        padding: 0px;
+    }
 }
 
 .btn {

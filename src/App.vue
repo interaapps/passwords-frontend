@@ -8,7 +8,7 @@
     <PasswordSidebar />
     <CreateFolder />
     <Login />
-    <router-view id="page" />
+    <router-view id="page" :class="{fullscreen: (this.$store.state.app.fullScreenOnNotes && this.$route.name == 'Notes')}" />
   </div>
 </template>
 

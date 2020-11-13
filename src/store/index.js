@@ -44,7 +44,10 @@ export default new Vuex.Store({
       },
       parent: null
     },
-    folderModal: null
+    folderModal: null,
+    app: {
+      fullScreenOnNotes: false
+    }
   },
   mutations: {
   },
