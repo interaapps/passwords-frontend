@@ -19,14 +19,13 @@
                 <div id="right">
                     <div id="badges">
 
-                        <span v-if="unsaved" style="background: #EE4343" class="badge">UNSAVED</span>
-                        <span v-if="!selected" class="badge">NEW</span>
-                        <svg v-else width="25px" @click="deleteNote" height="25px" style="color: #F13737; cursor: pointer" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
+                        <svg @click="save()" v-if="unsaved" style="color: #43EE43" viewBox="0 0 16 16" class="bi bi-check2" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg>
+                        <svg v-if="selected" width="25px" @click="deleteNote" height="25px" style="color: #F13737; cursor: pointer" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>
                     </div>
                 </div>
-                <input    @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" type="text" id="title-input" v-model="title" placeholder="Title">
+                <input    @keyup="unsaved = true" @keydown.ctrl="keyboardEvents" type="text" id="title-input" v-model="title" placeholder="Title">
                 <h4 id="date">Updated: {{updated}}</h4>
-                <textarea @keypress="unsaved = true" @keydown.ctrl="keyboardEvents" id="content-input" v-model="contents" placeholder="Just write in here :)"></textarea>
+                <textarea @keyup="unsaved = true" @keydown.ctrl="keyboardEvents" id="content-input" v-model="contents" placeholder="Just write in here :)"></textarea>
             </div>
         </div>
     </div>
@@ -253,7 +252,9 @@ export default {
                 vertical-align: middle;
                 margin-top: 15px;
                 width:  27px;
+                cursor: pointer;
                 height: 27px;
+                margin-left: 9.5px;
             }
         }
     }
@@ -267,15 +268,16 @@ export default {
 
     &.sidebar-closed {
         margin-left: 60px;
+        padding-left:  0px;
+        padding-right: 0px;
     }
 
     &.fullscreen {
         margin-top: 30px;
     }
 
-    &.sidebar-closed {
-        padding-left:  0px;
-        padding-right: 0px;
+    &.sidebar-closed.fullscreen {
+        padding-top: 50px;
     }
 
 }
