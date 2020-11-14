@@ -193,6 +193,7 @@ export default {
     overflow: auto;
     background: #F6F6F6D6;
     margin-bottom: 30px;
+    z-index: 100000;
 
     backdrop-filter: blur(12px);
 

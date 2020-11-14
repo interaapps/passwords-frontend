@@ -207,6 +207,7 @@ export default {
     position: fixed;
     width: 100%;
     height: 65px;
+    z-index: 1000;
 
     #logo {
         svg {

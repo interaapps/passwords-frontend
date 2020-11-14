@@ -1,4 +1,4 @@
-@import './manrope.scss';
+@import './manrope.scss', './markdown.scss';
 
 * {
     padding: 0px;
@@ -135,7 +135,7 @@ height: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-background: #323232;
+background: #767676;
 }
 
 ::-webkit-scrollbar-thumb:hover {
