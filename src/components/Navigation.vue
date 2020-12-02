@@ -57,7 +57,7 @@
                     </router-link>
 
                     <span class="label">PASSWORDS</span>
-                    <div v-for="password in passwords" :key="password.id" >
+                    <div v-for="(password, index) in passwords" :key="'password'+index" >
                         <div class="result" v-if="searchMatch(password.name) || searchMatch(password.email) || searchMatch(password.username) || searchMatch(password.website)" @click="$store.state.currentPassword = password">
                             <img class="favicon" :src="'https://icons.duckduckgo.com/ip3/'+password.websiteHost+'.ico'">
                             <span class="title">{{password.name}}</span>
@@ -65,7 +65,7 @@
                     </div>
 
                     <span class="label">FOLDER</span>
-                    <div v-for="folder in folders" :key="folder.id">
+                    <div v-for="(folder, index) in folders" :key="'folder'+index">
                         <div class="result" v-if="searchMatch(folder.name)">
                             <svg viewBox="0 0 16 16" class="bi bi-folder favicon" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"/><path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"/></svg>
                             <span class="title">{{folder.name}}</span>
@@ -138,7 +138,7 @@ export default {
             return false
         },
         leftFocus(){
-            setTimeout(()=>{this.searchOpened = false; this.search = "";}, 110)
+            setTimeout(()=>{this.searchOpened = false; this.search = "";}, 200)
         },
         createPassword(){
             this.$store.state.currentPassword = {

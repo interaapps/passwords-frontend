@@ -9,13 +9,15 @@ require("./assets/scss/app.scss")
 Vue.config.productionTip = false
 
 const passwordsClient = new Passwords(process.env.VUE_APP_API_BASE, localStorage["session"])
+const eventBus = new Vue()
 
 if (localStorage["session"])
   passwordsClient.apiClient.options.header["X-Key"] = localStorage["session"]
 
 Vue.mixin({
   data: function(){return{
-    passwordsClient
+    passwordsClient,
+    eventBus
   }}
 })
 
@@ -26,7 +28,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-
-
-export default {$passwordsClient: passwordsClient}

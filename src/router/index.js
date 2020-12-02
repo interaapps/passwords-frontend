@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import PasswordList from '../views/PasswordList.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Passwords',
+    component: PasswordList
   },
   {
     path: '/info',
@@ -29,7 +29,12 @@ const routes = [
     path: '/auth',
     name: 'Authentication',
     component: () => import('../views/auth/IAAuthLogin.vue')
-  }
+  },
+  {
+    path: '/:id',
+    name: 'Passwords',
+    component: PasswordList
+  },
 ]
 
 const router = new VueRouter({

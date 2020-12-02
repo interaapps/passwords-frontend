@@ -3,13 +3,15 @@
     <br>
     <h1 class="section-title">Folder</h1>
     <div>
-      <div v-if="passwords.parent" class="folder" :style="{background: '#EEEEEE', color: '#434343'}" @click="changeFolder($store.state.passwords)">
+      <div v-if="passwords.parent !== -1" class="folder" :style="{background: '#EEEEEE', color: '#434343'}" @click="changeFolder($store.state.passwords)">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/><path fill-rule="evenodd" d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/></svg>
         <span>Home</span>
       </div>
 
       <div class="folder" v-for="(folder, id) in passwords.folders" :key="id" :style="{background: folder.folder.color}" @click="changeFolder(folder)" @contextmenu.prevent="openedFolderMenu = folder" :class="{opened: openedFolderMenu == folder}">
         <div  @click.prevent.stop="openedFolderMenu = null" @contextmenu.prevent.stop="openedFolderMenu = null" class="folder-contextmenu" v-if="openedFolderMenu === folder"></div>
+        
+        <!-- Folder Context-Menu -->
         <div @click.prevent.stop v-if="openedFolderMenu === folder" class="folder-contextmenu-menu">
             <div class="folder-contextmenu-menu-entry" @click="passwords = folder">
                <svg viewBox="0 0 16 16" class="bi bi-folder2-open" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z"/></svg>
@@ -29,6 +31,7 @@
         <span>{{folder.folder.name}}</span>
       </div>
 
+      <!-- Add-Button -->
       <div class="folder add" @click="$store.state.folderModal = {opened: true}">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>

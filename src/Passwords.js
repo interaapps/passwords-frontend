@@ -107,13 +107,9 @@ export default class Passwords {
         if (key === null) {
             key = store.state.encryptionKey
         }
-
-        console.log("YEEEEEEEEEEEEEEEEEE");
-        console.log(notes);
         
         for (let note in notes) {
             const element = notes[note]
-            console.log(element);
             element.title   = CryptoJS.AES.decrypt(element.title,   key).toString(CryptoJS.enc.Utf8);
             element.content = CryptoJS.AES.decrypt(element.content, key).toString(CryptoJS.enc.Utf8);
         }

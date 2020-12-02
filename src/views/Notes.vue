@@ -93,8 +93,6 @@ export default {
             if (this.selected)
                 data.id = this.selected
 
-            console.log(this.selected);
-
             this.passwordsClient
                 .putNote(data).then(res=>{
                     if (res.success) {
@@ -107,7 +105,6 @@ export default {
                 })
         },
         keyboardEvents(e){
-            console.log(e);
             if (e.ctrlKey || e.key == 'Control') {
                 if (e.code == 'KeyS'){
                     this.save()
@@ -178,7 +175,6 @@ export default {
             this.markdownEditor = !this.markdownEditor
 
             if (this.markdownEditor) {
-                console.log(this.contents);
                 this.contentsHTML = md.render(this.contents)
                 this.markdown()
             }
