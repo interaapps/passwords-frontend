@@ -38,6 +38,7 @@
         </li>
         
         <li>CryptoJS</li>
+        <li>jsotp</li>
       </ul>
     </p>
     

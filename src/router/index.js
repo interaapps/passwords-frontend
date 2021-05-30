@@ -31,6 +31,11 @@ const routes = [
     component: () => import('../views/auth/IAAuthLogin.vue')
   },
   {
+    path: '/f/:folderId',
+    name: 'Passwords',
+    component: PasswordList
+  },
+  {
     path: '/:id',
     name: 'Passwords',
     component: PasswordList

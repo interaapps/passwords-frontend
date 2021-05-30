@@ -146,6 +146,7 @@ export default class Passwords {
                 element.username    = CryptoJS.AES.decrypt(element.username,    key).toString(CryptoJS.enc.Utf8);
                 element.password    = CryptoJS.AES.decrypt(element.password,    key).toString(CryptoJS.enc.Utf8);
                 element.description = CryptoJS.AES.decrypt(element.description, key).toString(CryptoJS.enc.Utf8);
+                element.totp = CryptoJS.AES.decrypt(element.totp, key).toString(CryptoJS.enc.Utf8);
                 
                 element.key = key;
             } catch(e){

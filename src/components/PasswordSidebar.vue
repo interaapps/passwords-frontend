@@ -59,6 +59,16 @@
             <input ref="websiteInput" style="padding-right: 30px;" type="text" class="" v-model="website" autocomplete="nofill" aria-autocomplete="list" placeholder="website">
         </div>
 
+        <span class="label">TOTP (2FA)</span>
+        <div class="passwords-input-box">
+            <div class="action-buttons"  v-if="totpSecret && totpSecret != ''">
+                <span style="border-left: 1px #00000011 solid; padding-left: 5px">CODE: {{totpCode}}</span>
+                <input type="text" style="position: fixed; left: -100%; top: -100%" ref="totpRef" v-model="totpCode" >
+                <svg @click="copy($refs.totpRef)" viewBox="0 0 16 16" class="bi bi-clipboard" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path fill-rule="evenodd" d="M9.5 1h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+            </div>
+            <input style="padding-right: 155px;" type="text" class="" v-model="totpSecret" autocomplete="nofill" aria-autocomplete="list" placeholder="totp secret">
+        </div>
+
         <span class="label">DESCRIPTION</span>
         <div class="passwords-input-box">
             <textarea style="resize: vertical; height: 100px" type="text" class="" v-model="description" autocomplete="nofill" aria-autocomplete="list" placeholder="description"></textarea>
@@ -69,6 +79,7 @@
 <script>
 import Modal from "./Modal";
 import helpers from "../helpers";
+const jsotp = require('jsotp');
 
 import CryptoJS from 'crypto-js'
 
@@ -80,6 +91,8 @@ export default {
         password: '-', 
         description: '-',
         passwordShown: false,
+        totpSecret: "",
+        totpCode: "123456",
         folder: null,
 
         generatePasswordLength: 15,
@@ -87,13 +100,28 @@ export default {
         generatePasswordNumbers: true,
         generatePasswordSpecialChars: false,
         generatedPassword: '-',
-        passwordGeneratorOpened: false
+        passwordGeneratorOpened: false,
+        interval: null,
     }),
     components: {
         Modal
     },
     mounted(){
         this.generatePassword()
+
+        this.interval = setInterval(()=>{
+            console.log(this.totpSecret);
+            try {
+                const totp = jsotp.TOTP(this.totpSecret);
+                this.totpCode = totp.now();
+            }catch(e){
+                console.log(e);
+                //
+            }
+        }, 1000)
+    },
+    beforeDestroy() {
+        clearInterval(this.interval)
     },
     watch: {
         '$store.state.currentPassword'(){
@@ -102,6 +130,7 @@ export default {
             this.website     = this.$store.state.currentPassword.website
             this.password    = this.$store.state.currentPassword.password
             this.description = this.$store.state.currentPassword.description
+            this.totpSecret  = this.$store.state.currentPassword.totp
             if (this.passwordsClient.getCurrentFolder().folder)
                 this.folder = this.passwordsClient.getCurrentFolder().folder.id
             else
@@ -116,7 +145,8 @@ export default {
                 username: CryptoJS.AES.encrypt(this.username,       this.key).toString(),
                 password: CryptoJS.AES.encrypt(this.password,       this.key).toString(),
                 website: CryptoJS.AES.encrypt(this.website,         this.key).toString(),
-                description: CryptoJS.AES.encrypt(this.description, this.key).toString()
+                description: CryptoJS.AES.encrypt(this.description, this.key).toString(),
+                totp: CryptoJS.AES.encrypt(this.totpSecret, this.key).toString()
             }
             if (this.$store.state.currentPassword.id)
                 data.id = this.$store.state.currentPassword.id
@@ -173,6 +203,10 @@ export default {
     svg {
         vertical-align: middle;
         cursor: pointer;
+    }
+
+    span {
+        vertical-align: middle;
     }
 
     #unsaved-indicator {

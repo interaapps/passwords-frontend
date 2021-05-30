@@ -24,7 +24,11 @@ export default {
         colors: [
             "#EA5555",
             "#58EA55",
-            "#5576EA"
+            "#5576EA",
+            "#e8b21c",
+            "#a30fff",
+            "#ff0f57",
+            "#212120"
         ],
         name: "",
         selectedColor: '#EA5555'
@@ -52,6 +56,9 @@ export default {
                         .then(()=>{
                             this.passwordsClient
                                 .fetchAndDecrypt()
+                                .then(()=>{
+                                    this.$store.state.folderModal = null
+                                })
                         })
                 }
             })
